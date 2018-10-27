@@ -11,6 +11,21 @@ struct Query {
   std::vector<int> b;
 }; // struct Query
 
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v) {
+  os << "[ ";
+  for (const auto& x : v) {
+    os << x << ' ';
+  }
+  os << "]";
+  return  os;
+}
+
+std::ostream& operator<<(std::ostream& os, const Query& q) {
+  os << "Query{k: " << q.k << " l: " << q.l << " a: " << q.a << " b: " << q.b << "}";
+  return os;
+}
+
 struct ProblemInfo {
   ProblemInfo(std::size_t n, std::size_t q, std::string_view s) : n(n), q(q), s(s) {}
   std::size_t n;
@@ -18,6 +33,15 @@ struct ProblemInfo {
   std::string s;
   std::vector<Query> queries;
 }; // struct ProblemInfo
+
+std::ostream& operator<<(std::ostream& os, const ProblemInfo& p) {
+  os << "ProblemInfo{\n\tn: " << p.n << "\n\tq: " << p.q << "\n\ts: " << p.s;
+  std::for_each(p.queries.begin(), p.queries.end(), [&os](const Query& q) {
+    os << "\n\t" << q;
+  });
+  os << "}";
+  return  os;
+}
 
 ProblemInfo createProblemInfo() {
   std::size_t n, q;
@@ -46,6 +70,7 @@ ProblemInfo createProblemInfo() {
 }
 
 int main() {
-  createProblemInfo();
+  auto problem_info = createProblemInfo();
+  std::cout << problem_info << std::endl;
   return 0;
 }
