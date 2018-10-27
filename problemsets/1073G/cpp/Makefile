@@ -1,5 +1,5 @@
-CC := g++-7
-STD := -std=c++14
+CC := g++
+STD := -std=c++17
 
 all: main.cpp
-	$(CC) $(STD) main.cp -o main
+	$(CC) $(STD) main.cpp -o main
